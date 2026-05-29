@@ -1,42 +1,18 @@
 package ru.netology.javaqa.javaqamvn.services;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class VacationServiceTest {
 
-    @Test
-    public void testExample1() {
+    @ParameterizedTest
+    @CsvFileSource(resources = "/test-data.csv", numLinesToSkip = 1)
+    public void testVacationService(int income, int expenses, int threshold, int expected) {
         VacationService service = new VacationService();
-        int income = 10000;
-        int expenses = 3000;
-        int threshold = 20000;
 
-        int result = service.calculate(income, expenses, threshold);
-        assertEquals(3, result);
+        int actual = service.calculate(income, expenses, threshold);
+
+        Assertions.assertEquals(expected, actual);
     }
-
-    @Test
-    public void testExample2() {
-        VacationService service = new VacationService();
-        int income = 100000;
-        int expenses = 60000;
-        int threshold = 150000;
-
-        int result = service.calculate(income, expenses, threshold);
-        assertEquals(2, result);
-    }
-
-    @Test
-    public void testNoVacation() {
-        VacationService service = new VacationService();
-        int income = 5000;
-        int expenses = 10000;
-        int threshold = 50000;
-
-        int result = service.calculate(income, expenses, threshold);
-        assertEquals(0, result);
-    }
-
 }
